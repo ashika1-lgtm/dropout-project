@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
+    padding: 40px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+
+.center-section {
+    display: flex;
+    flex-direction: column;   /* stack vertically */
+    align-items: center;      /* center horizontally */
+    gap: 30px;                /* space between import & add */
+    margin-top: 50px;
+}
+
+/* IMPORT BUTTON */
+.import-btn {
+    background: linear-gradient(135deg,#6366f1,#4f46e5);
+    color: white;
+    border: none;
+    padding: 45px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 500px;          /* same width as add-card */
+    margin: auto;          /* center it */
+    display: block;        /* make it behave like a card */
+    font-size: 22px;
+    font-weight: 600;
+    box-shadow: 0 12px 30px rgba(79,70,229,0.4);
+    transition: all 0.2s ease;
+}
+
+.import-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(79,70,229,0.5);
+}
+
+.import-btn:active {
+    transform: scale(0.97);
+}
+/* CLEAR BUTTON */
+.clear-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 6px 15px rgba(239,68,68,0.4);
+    transition: all 0.2s ease;
+}
+
+.clear-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(239,68,68,0.5);
+}
+
+.clear-btn:active {
+    transform: scale(0.95);
+}
+
+/* ADD STUDENT CARD */
+.add-card {
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+    color: white;
+    padding: 45px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 500px;
+    margin: auto;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+}
+
+.add-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.3);
+}
+
+.add-card:active {
+    transform: scale(0.97);
+}
+
+
+.add-card h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.add-card p {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+.suggested-section {
+    margin-top: 40px;
+    padding: 15px;
+    background: #f1f5f9;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+}
+
+th {
+    background: #6366f1;
+    color: white;
+    padding: 14px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.empty {
+    text-align: center;
+    margin-top: 50px;
+    padding: 50px;
+    background: #f8fafc;
+    border-radius: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+        /* Bottom Sheet */
+  .bottom-sheet {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -100%;
+    width: 600px;               /* reduced width */
+    max-width: 90%;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    transition: 0.4s ease;
+    z-index: 1000;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+        .bottom-sheet.active {
+            bottom: 40px;
+        }
+
+        .sheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sheet-header h2 {
+            margin: 0;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+       .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 20px;
+}
+        
+
+input, select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+        .submit-btn {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.low {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.high {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.delete-btn {
+    color: #ef4444;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.delete-btn:hover {
+    color: #b91c1c;
+}
+.import-card {
+    background: linear-gradient(135deg,#6366f1,#4f46e5);
+}
+.flash {
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* SUCCESS - Green */
+.flash.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* ERROR - Red */
+.flash.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash">
+      {% for category,message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+      <div class="header-row">
+    <h1>Students</h1>
+    <a href="/clear_all" class="clear-btn">Clear All</a>
+</div>
+
+<hr>
+
+<div class="center-section">
+    <form action="/import_csv" method="POST" enctype="multipart/form-data" id="csvForm">
+    
+    <input type="file" name="file" id="csvFile" accept=".csv" 
+           style="display:none;" 
+           onchange="document.getElementById('csvForm').submit()">
+
+    <div class="add-card import-card" 
+         onclick="document.getElementById('csvFile').click()">
+        <h2>Import CSV Files</h2>
+        <p>Upload Student Data</p>
+    </div>
+
+</form>
+
+    <div class="add-card" onclick="openSheet()">
+        
+        <h2>+ Add Student</h2>
+        <p>Click to Add New Student</p>
+    </div>
+
+</div>
+
+<div class="suggested-section">
+    <strong> Suggested Columns:</strong><br>
+    Name, Department, Semester, Attendance, 
+    Fee Payment, Class Performance, Study Hours, Stress Level
+</div>
+
+{% if students and students|length > 0 %}
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Semester</th>
+        <th>Attendance</th>
+        <th>Fee</th>
+        <th>Performance</th>
+        <th>Study Hours</th>
+        <th>Stress</th>
+        <th>Risk</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for student in students %}
+    <tr>
+        <td>{{ student[1] }}</td>
+        <td>{{ student[2] }}</td>
+        <td>{{ student[3] }}</td>
+        <td>{{ student[4] }}</td>
+        <td>{{ student[5] }}</td>
+        <td>{{ student[6] }}</td>
+        <td>{{ student[7] }}</td>
+        <td>{{ student[8] }}</td>
+        <td>{{ student[9] }}</td>
+
+<td>
+    {% if student[10] == "Low" %}
+        <span class="badge low">Low Risk</span>
+    {% elif student[10] == "Moderate" %}
+        <span class="badge medium">Medium Risk</span>
+    {% else %}
+        <span class="badge high">High Risk</span>
+    {% endif %}
+</td>
+
+<td>
+    <a href="/delete_student/{{ student[0] }}" class="delete-btn">
+        <i class="fa-solid fa-trash"></i>
+    </a>
+</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% else %}
+
+<div class="empty">
+     No students are added yet<br>
+    Click “Add Student” above to get started
+</div>
+
+{% endif %}
+
+
+</div>
+
+<!-- Bottom Sheet -->
+<div class="bottom-sheet" id="sheet">
+
+    <div class="sheet-header">
+        <h2>Add Student</h2>
+        <span class="close-btn" onclick="closeSheet()">✖</span>
+    </div>
+
+    <form action="/add_student" method="POST">
+        <div class="form-grid">
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" required>
+    </div>
+
+    <div class="form-group">
+        <label>Department</label>
+        <input type="text" name="department" required>
+    </div>
+
+    <div class="form-group">
+        <label>Semester (1–8)</label>
+        <input type="number" name="semester" min="1" max="8" required>
+    </div>
+
+    <div class="form-group">
+        <label>Attendance: <span id="attendanceValue">75%</span></label>
+        <input type="range" name="attendance" min="0" max="100" value="75"
+               oninput="attendanceValue.innerText = this.value + '%'">
+    </div>
+
+    <div class="form-group">
+        <label>Fee Payment</label>
+        <select name="fee_payment" required>
+            <option value="">Select Status</option>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Class Performance: <span id="performanceValue">70%</span></label>
+        <input type="range" name="class_performance" min="0" max="100" value="70"
+               oninput="performanceValue.innerText = this.value + '%'">
+    </div>
+
+    <div class="form-group">
+        <label>Study Hours (24hr format)</label>
+        <input type="number" name="study_hours" min="0" max="24" required>
+    </div>
+
+    <div class="form-group">
+        <label>Stress Level: <span id="stressValue">5</span> / 10</label>
+        <input type="range" name="stress_level" min="1" max="10" value="5"
+               oninput="stressValue.innerText = this.value">
+    </div>
+
+</div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+</div>
+
+<script>
+    function openSheet() {
+        document.getElementById("sheet").classList.add("active");
+    }
+
+    function closeSheet() {
+        document.getElementById("sheet").classList.remove("active");
+    }
+</script>
+
+</body>
+</html>

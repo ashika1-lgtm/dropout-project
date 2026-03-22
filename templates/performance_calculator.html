@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Performance Calculator</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .risk-box {
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .moderate {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        canvas {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        @media(max-width: 768px){
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .result-info {
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #334155;
+}
+
+.result-info strong {
+    font-weight: 500;
+    color: #1e293b;
+}
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Performance Calculator</h1>
+
+    <div class="card">
+        <form method="POST">
+
+            <label>Name</label>
+            <input type="text" name="name">
+
+            <label>Department</label>
+            <input type="text" name="department">
+
+            <label>Semester</label>
+            <input type="number" name="semester">
+
+            <label>Attendance (%)</label>
+            <input type="number" name="attendance">
+
+            <label>CGPA</label>
+            <input type="number" step="0.1" name="cgpa">
+
+            <label>Backlogs</label>
+            <input type="number" name="backlogs">
+            <hr style="margin:25px 0;">
+
+<h3 style="margin-bottom:15px;">Subject Marks</h3>
+
+{% for i in range(1,11) %}
+<div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px; margin-bottom:10px;">
+    <input type="text" name="subject{{i}}" placeholder="Subject Name">
+    <input type="number" name="obtained{{i}}" placeholder="Marks Obtained">
+    <input type="number" name="total{{i}}" placeholder="Total Marks">
+</div>
+{% endfor %}
+
+            <button type="submit">Analyze Performance</button>
+
+        </form>
+    </div>
+
+    {% if risk_level %}
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="result-title">Analysis Result</div>
+
+           <div class="result-info"><strong>Name:</strong> {{ name }}</div>
+<div class="result-info"><strong>Department:</strong> {{ department }}</div>
+<div class="result-info"><strong>Semester:</strong> {{ semester }}</div>
+<div class="result-info"><strong>Risk Score:</strong> {{ risk_score }}</div>
+
+            <div class="risk-box 
+                {% if risk_level == 'Low' %} low
+                {% elif risk_level == 'Moderate' %} moderate
+                {% else %} high
+                {% endif %}">
+                Risk Level: {{ risk_level }}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="result-title">Risk Contribution</div>
+            <canvas id="riskChart"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        const ctx = document.getElementById('riskChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Attendance', 'CGPA', 'Backlogs'],
+                datasets: [{
+                    data: [
+                        {{ attendance | default(0) }},
+                        {{ cgpa | default(0) }},
+                        {{ backlogs | default(0) }}
+                    ],
+                    backgroundColor: [
+                        '#6366f1',
+                        '#8b5cf6',
+                        '#f97316'
+                    ],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+
+{% if subjects %}
+<div class="card">
+    <div class="result-title">Subject Marks</div>
+    <canvas id="subjectChart"></canvas>
+</div>
+
+<script>
+const ctx2 = document.getElementById('subjectChart').getContext('2d');
+
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: {{ subjects | tojson }},
+        datasets: [{
+            label: 'Marks Obtained',
+            data: {{ obtained_marks | tojson }},
+            backgroundColor: '#6366f1',
+            borderRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endif %}
+
+{% endif %}
+
+
+</div>
+
+</body>
+</html>

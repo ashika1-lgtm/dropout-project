@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background: linear-gradient(135deg,#dbeafe,#c7d2fe,#e0e7ff);
+        }
+
+        /* Header */
+        .header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:20px 40px;
+            font-weight:500;
+            color:#1e293b;
+        }
+
+        .header h2{
+            font-size:20px;
+        }
+
+        .header .right{
+            font-size:14px;
+        }
+
+        .header a{
+            text-decoration:none;
+            color:#4f46e5;
+            margin-left:10px;
+            font-weight:500;
+        }
+
+        /* Dashboard container */
+        .container{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:40px;
+        }
+
+        .grid{
+            width:900px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:30px;
+        }
+
+        .card{
+            background:rgba(255,255,255,0.85);
+            backdrop-filter:blur(15px);
+            border-radius:20px;
+            padding:50px 20px;
+            text-align:center;
+            box-shadow:0 20px 40px rgba(0,0,0,0.1);
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .card-icon{
+            font-size:40px;
+            margin-bottom:15px;
+        }
+
+        .card-title{
+            font-size:18px;
+            font-weight:500;
+            color:#334155;
+        }
+
+        @media(max-width:900px){
+            .grid{
+                width:100%;
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h2>Student Dropout Prediction and Analysis</h2>
+        <div class="right">
+            {{ username }} |
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+   <!-- Dashboard Cards -->
+<div class="container">
+    <div class="grid">
+
+        <!-- Admin Dashboard -->
+        <a href="/admin_dashboard" style="text-decoration:none; color:inherit;">
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+                        <defs>
+                            <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#60a5fa"/>
+                                <stop offset="100%" stop-color="#4f46e5"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="3" y="10" width="3" height="8" rx="1" fill="url(#grad1)"/>
+                        <rect x="10" y="6" width="3" height="12" rx="1" fill="url(#grad1)"/>
+                        <rect x="17" y="3" width="3" height="15" rx="1" fill="url(#grad1)"/>
+                    </svg>
+                </div>
+                <div class="card-title">Admin Dashboard</div>
+            </div>
+        </a>
+
+        <!-- Performance Calculator -->
+        <a href="/performance_calculator" style="text-decoration:none; color:inherit;">
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+                        <defs>
+                            <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#60a5fa"/>
+                                <stop offset="100%" stop-color="#4f46e5"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="4" y="2" width="16" height="20" rx="3" fill="url(#grad2)"/>
+                        <rect x="7" y="6" width="10" height="3" rx="1" fill="white"/>
+                        <circle cx="8" cy="12" r="1" fill="white"/>
+                        <circle cx="12" cy="12" r="1" fill="white"/>
+                        <circle cx="16" cy="12" r="1" fill="white"/>
+                        <circle cx="8" cy="16" r="1" fill="white"/>
+                        <circle cx="12" cy="16" r="1" fill="white"/>
+                        <circle cx="16" cy="16" r="1" fill="white"/>
+                    </svg>
+                </div>
+                <div class="card-title">Performance Calculator</div>
+            </div>
+        </a>
+
+        <!-- View Students -->
+        <a href="/view_students" style="text-decoration:none; color:inherit;">
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+                        <defs>
+                            <linearGradient id="grad3" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#60a5fa"/>
+                                <stop offset="100%" stop-color="#4f46e5"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="4" y="3" width="16" height="18" rx="3" fill="url(#grad3)"/>
+                        <polyline points="7,9 9,11 13,7" stroke="white" stroke-width="2" fill="none"/>
+                        <line x1="7" y1="14" x2="17" y2="14" stroke="white" stroke-width="2"/>
+                        <line x1="7" y1="17" x2="17" y2="17" stroke="white" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="card-title">View Students</div>
+            </div>
+        </a>
+
+        <!-- View Analytics -->
+        <a href="/view_analytics" style="text-decoration:none; color:inherit;">
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+                        <defs>
+                            <linearGradient id="grad4" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#60a5fa"/>
+                                <stop offset="100%" stop-color="#4f46e5"/>
+                            </linearGradient>
+                        </defs>
+                        <polyline points="3,17 9,11 13,15 21,7" stroke="url(#grad4)" stroke-width="3" fill="none"/>
+                        <circle cx="9" cy="11" r="2" fill="url(#grad4)"/>
+                        <circle cx="13" cy="15" r="2" fill="url(#grad4)"/>
+                        <circle cx="21" cy="7" r="2" fill="url(#grad4)"/>
+                    </svg>
+                </div>
+                <div class="card-title">View Analytics</div>
+            </div>
+        </a>
+
+    </div>
+</div>

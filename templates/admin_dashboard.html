@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background: linear-gradient(135deg,#dbeafe,#c7d2fe,#e0e7ff);
+            padding:40px;
+        }
+
+        .welcome-box{
+            text-align:center;
+            margin-bottom:40px;
+        }
+
+        .welcome-box h2{
+            font-weight:600;
+            color:#1e293b;
+            margin-bottom:10px;
+        }
+
+        .stats-container{
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            flex-wrap:wrap;
+        }
+
+        .stat-card{
+            background:rgba(255,255,255,0.85);
+            backdrop-filter:blur(15px);
+            padding:40px;
+            width:250px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .stat-number{
+            font-size:40px;
+            font-weight:600;
+            color:#4f46e5;
+            margin-bottom:10px;
+        }
+
+        .stat-label{
+            font-size:14px;
+            color:#334155;
+            letter-spacing:1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-box">
+        <h2>Welcome {{ username }}</h2>
+        <p>{{ role }} of {{ college }}</p>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_students }}</div>
+            <div class="stat-label">Total Students</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">{{ low_risk }}</div>
+            <div class="stat-label">Low Risk</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">{{ high_risk }}</div>
+            <div class="stat-label">High Risk</div>
+        </div>
+    </div>
+
+</body>
+</html>
